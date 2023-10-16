@@ -1,0 +1,9 @@
+<<<<<<< HEAD
+venv/
+=======
+*.pyc
+venv/
+*.log
+*.tmp
+>>>>>>> recover-branch
+venv/

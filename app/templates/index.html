@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vocal Cord Segmentation</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+    <header>
+        <h1>Vocal Cord Image Segmentation</h1>
+    </header>
+
+    <!--Overview -->
+    <section id="model-description">
+        <h2>Overview</h2>
+        <p>
+            This project focuses on leveraging the U-Net model for the segmentation of the glottis area in high-speed videoendoscopy frames derived from the BAGLS dataset. The BAGLS dataset comprises a substantial and diverse multihospital dataset that includes 59,250 high-speed videoendoscopy frames, each accompanied by individually annotated segmentation masks.
+
+            The process of analyzing these recordings traditionally requires a meticulous segmentation of the glottal area by trained experts, which is notably time-consuming. This project aims to automate this process using the U-Net model to effectively and accurately perform glottis segmentation.
+        </p>
+
+        
+    </section>
+
+    <main>
+        <section>
+            <h2>Upload Image</h2>
+            <form action="/segment" method="post" enctype="multipart/form-data">
+                <label for="model">Choose a model:</label>
+                <select id="model" name="model">
+                    <option value="Unet">U-net</option>
+                    <option value="kmeans">kmeans</option>
+                    <option value="Meanshift">Meanshift</option>
+                </select>
+                <br>
+                <input type="file" name="file" accept="image/*" required>
+                <input type="submit" value="Upload and Segment">
+            </form>
+        </section>
+        {% if original and segmented %}
+        <section id="results">
+            <div>
+                <img id="original" src="{{ original }}" alt="Uploaded Image" width="300">
+                <img id="segmented" src="{{ segmented }}" alt="Segmented Image" width="300">
+            </div>
+        </section>
+        <section id="results-metrics">
+            <h2>Metrics</h2>
+            <p>Surface of Segmented Glottis: {{ surface }} pixels</p>
+            <p>The Iou score : {{iou_score}}</p>
+        </section>
+        
+        {% endif %}
+        <section>
+            <h2>Upload Video</h2>
+            <form action="/upload_video" method="post" enctype="multipart/form-data">
+                <input type="file" name="video" accept="video/mp4" required>
+                <input type="submit" value="Upload Video">
+            </form>
+        </section>
+        <section>
+            {% if plot_img %}
+            <h2>Surface Variance Plot</h2>
+                <img src="{{ plot_img }}" alt="Plot">
+            {% endif %}
+    
+            {% if original_frame %}
+                <h2>Original Frame with Max Surface</h2>
+                <img src="{{ original_frame }}" alt="Original Frame">
+            {% endif %}
+    
+            {% if segmented_frame %}
+                <h2>Segmented Mask of Frame with Max Surface</h2>
+                <img src="{{ segmented_frame }}" alt="Segmented Frame">
+            {% endif %}
+    
+        </section>
+    
+       
+        
+        
+        
+    </main>
+    
+    <!-- GitHub Code Link -->
+ 
+    
+    
+    <script src="static/script.js"></script>
+</body>
+</html>
